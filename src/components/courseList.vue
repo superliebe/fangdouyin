@@ -1,52 +1,63 @@
 <template>
     <div class="course_container">
-        <div class="top_nav">
-            <div class="direction_box">
-                <div class="top_direction" style="border-bottom: 1px solid #e8e8e8;">
-                    <div class="all_direction direction_classification" style="margin-left: -6px;">
-                        <div class="all_direction_name color_fixed">方向</div>
-                    </div>
-                    <div class="all_direction direction_classification" v-for="(direction,index) in directionList" :key="index"
-                        @click="directionClick(direction.directionId)" :class="clickDirection==direction.directionId?'color_red':''">
-                        <div class="all_direction_name">{{direction.classifyName}}</div>
-                    </div>
-
-                    <div class="clear"></div>
-                </div>
-            </div>
-            <div class="classify_box">
-                <div class="top_classify">
-                    <div class="all_direction direction_classification" style="margin-left: -6px;">
-                        <div class="all_direction_name color_fixed">分类</div>
-                    </div>
-                    <div class="all_direction direction_classification" @click="classifyClick(0)" :class="clickClassify==0?'color_red':''">
-                        <div class="all_direction_name">全部</div>
-                    </div>
-                    <div class="all_direction direction_classification" v-for="(classify,index) in classifyList" :key="index"
-                        @click="classifyClick(classify.classification_id)" :class="clickClassify==classify.classification_id?'color_red':''">
-                        <div class="all_direction_name">{{classify.classification_type}}</div>
-                    </div>
-
-                    <div class="clear"></div>
-                </div>
-            </div>
+        <div class="close_box">
+            <i class="iconfont icon-fanhui" @click="closeList"></i>
+            <div class="all_title">轻松学课程</div>
         </div>
-        <div class="article_container">
-            <div class="article_box" v-for="(item , index) in courseList" :key="index" @click="getArticleDetail(item.total_id)">
-                <div class="article_cover">
-                    <img :src="item.total_cover" class="article_cover_img">
-                </div>
-                <div class="article_details">
-                    <div class="article_title">
-                        <div class="article_details_title">{{item.total_title}}</div>
-                    </div>
-                    <div class="article_author_class">
-                        <div class="article_details_author">作者：{{item.total_author}}</div>
-                        <div class="article_details_class">{{item.total_time}}</div>
+
+        <div class="article_top_nav">
+            <div class="top_nav">
+                <div class="direction_box">
+                    <div class="top_direction" style="border-bottom: 1px solid #e8e8e8;">
+                        <div class="all_direction direction_classification" style="margin-left: -6px;">
+                            <div class="all_direction_name color_fixed">方向</div>
+                        </div>
+                        <div class="all_direction direction_classification" v-for="(direction,index) in directionList"
+                            :key="index" @click="directionClick(direction.directionId)"
+                            :class="clickDirection==direction.directionId?'color_red':''">
+                            <div class="all_direction_name">{{direction.classifyName}}</div>
+                        </div>
+
                         <div class="clear"></div>
                     </div>
                 </div>
-                <div class="clear"></div>
+                <div class="classify_box">
+                    <div class="top_classify">
+                        <div class="all_direction direction_classification" style="margin-left: -6px;">
+                            <div class="all_direction_name color_fixed">分类</div>
+                        </div>
+                        <div class="all_direction direction_classification" @click="classifyClick(0)"
+                            :class="clickClassify==0?'color_red':''">
+                            <div class="all_direction_name">全部</div>
+                        </div>
+                        <div class="all_direction direction_classification" v-for="(classify,index) in classifyList"
+                            :key="index" @click="classifyClick(classify.classification_id)"
+                            :class="clickClassify==classify.classification_id?'color_red':''">
+                            <div class="all_direction_name">{{classify.classification_type}}</div>
+                        </div>
+
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="article_container">
+                <div class="article_box" v-for="(item , index) in courseList" :key="index"
+                    @click="getArticleDetail(item.total_id)">
+                    <div class="article_cover">
+                        <img :src="item.total_cover" class="article_cover_img">
+                    </div>
+                    <div class="article_details">
+                        <div class="article_title">
+                            <div class="article_details_title">{{item.total_title}}</div>
+                        </div>
+                        <div class="article_author_class">
+                            <div class="article_details_author">作者：{{item.total_author}}</div>
+                            <div class="article_details_class">{{item.total_time}}</div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
             </div>
         </div>
 
@@ -196,15 +207,14 @@
                 this.clickClassify = 0;
                 //   console.log('click'+this.direction_id);
                 //   console.log('red'+this.clickDirection);
-                 this.courseList=[];
-                this.page=0;
+                this.courseList = [];
+                this.page = 0;
                 let that = this;
                 async function load() {
                     await that.getClassify();
                     await that.getCourseList();
                 }
                 load();
-               
             },
 
             //监听点击分类事件
@@ -213,8 +223,8 @@
                 this.clickClassify = classification_id;
                 //   console.log('click'+this.classification_id);
                 //   console.log('red'+this.clickClassify);
-                this.courseList=[];
-                this.page=0;
+                this.courseList = [];
+                this.page = 0;
                 this.getCourseList();
             },
 
@@ -232,9 +242,13 @@
 
             //分页——滚动条触碰到底部
             handleScroll() {
-                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                let scrollTop =
+                    document.documentElement.scrollTop || document.body.scrollTop;
                 //判断 如果文档的距离减200小于  屏幕可视距离  加上  滚动条距离顶部的距离，并且 loadNextPage为true ，则page++；
-                if (document.documentElement.scrollHeight - 200 < document.documentElement.clientHeight + scrollTop) {
+                if (
+                    document.documentElement.scrollHeight - 200 <
+                    document.documentElement.clientHeight + scrollTop
+                ) {
                     if (this.loadNextPage) {
                         // console.log("下一页");
                         this.loadNextPage = false;
@@ -260,7 +274,9 @@
                     //分页进入下一页
                     let data = res.data.result.data;
                     //判断 如果数据个数小于10，不进入下一页，否则loadNextPage设为true进入下一页
-                    data.length < 10 ? this.loadNextPage = false : this.loadNextPage = true;
+                    data.length < 10 ?
+                        (this.loadNextPage = false) :
+                        (this.loadNextPage = true);
                     //分页连接数组
                     this.courseList = [...this.courseList, ...data];
                     // console.log(JSON.stringify(this.courseList));
@@ -270,12 +286,32 @@
             //点击进入文章详情页面
             getArticleDetail(total_id) {
                 this.$router.push("/article?total_id=" + total_id);
-            }
+            },
+
+            //监听返回按钮返回上一页
+            closeList(){
+                this.$router.go(-1);
+            },
         }
     };
 </script>
 
 <style scoped>
+    /* 返回按钮 */
+    .close_box {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .icon-fanhui {
+        font-size: 20px;
+    }
+    .all_title{
+    float: right;
+    margin-left: 126px;
+    }
+
     /*暂无数据*/
     .no_data_box {
         text-align: center;
@@ -283,6 +319,11 @@
     }
 
     /* 小轮播 */
+    .article_top_nav {
+        margin-top: 46px;
+        padding: 0 10px;
+    }
+
     .direction_box,
     .classify_box {
         width: 100%;

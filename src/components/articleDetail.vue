@@ -1,5 +1,10 @@
 <template>
   <div class="details_container">
+    <div class="close_box">
+      <i class="iconfont icon-fanhui" @click="closeList"></i>
+      <div class="all_title">文章详情</div>
+    </div>
+
     <div class="details_box" v-for="(item , index) in totalList" :key="index">
       <div class="details_title">
         <div class="article_title">{{item.total_title}}</div>
@@ -42,13 +47,35 @@ export default {
       this.$http.post("/api/total/detail", obj).then(res => {
         this.totalList = res.data.result.data;
       });
+    },
+
+    //监听返回按钮返回上一页
+    closeList() {
+      this.$router.go(-1);
     }
   }
 };
 </script>
 
 <style scoped>
+/* 返回按钮 */
+.close_box {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.icon-fanhui {
+  font-size: 20px;
+}
+.all_title {
+  float: right;
+  margin-left: 130px;
+}
+
 .details_box {
+  margin-top: 56px;
+  padding: 0 10px;
   text-align: left;
 }
 .details_container {
@@ -116,7 +143,7 @@ export default {
 }
 .detail_collect {
   color: #f44;
-} 
+}
 </style>
 <style>
 .article_detail p img {

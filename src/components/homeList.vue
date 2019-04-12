@@ -3,19 +3,19 @@
         <div class="menu_div second_menu">
             <div class="recommend_navigation">
                 <div class="recommend_direction direction_first" @click="coursePage(1)">
-                    <img class="recommend_img" src="/images/icon_web.png">
+                    <img class="recommend_img" src="http://qsx.jishiyoo.com/resource/static/images/icon_web.png">
                     <div class="recommend_name recommend_name1">Web前端攻城狮</div>
                 </div>
                 <div class="recommend_direction direction_second" @click="coursePage(3)">
-                    <img class="recommend_img" src="/images/icon_ios.png">
+                    <img class="recommend_img" src="http://qsx.jishiyoo.com/resource/static/images/icon_ios.png">
                     <div class="recommend_name recommend_name2">iOS攻城狮</div>
                 </div>
                 <div class="recommend_direction direction_third" @click="coursePage(3)">
-                    <img class="recommend_img" src="/images/icon_android.png">
+                    <img class="recommend_img" src="http://qsx.jishiyoo.com/resource/static/images/icon_android.png">
                     <div class="recommend_name recommend_name3">Android攻城狮</div>
                 </div>
                 <div class="recommend_direction direction_fourth" @click="coursePage(2)">
-                    <img class="recommend_img" src="/images/icon_java.png">
+                    <img class="recommend_img" src="http://qsx.jishiyoo.com/resource/static/images/icon_java.png">
                     <div class="recommend_name recommend_name4">后台攻城狮</div>
                 </div>
                 <div class="clear"></div>

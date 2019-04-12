@@ -53,7 +53,7 @@
         <!--暂无数据-->
         <div class="no_data_box" v-if="courseList==''">
             <div class="no_data_img_box">
-                <img class="no_data_img" src="/images/no_data.png">
+                <img class="no_data_img" src="http://qsx.jishiyoo.com/resource/static/images/no_data.png">
                 <div class="no_data_msg">暂无数据</div>
             </div>
         </div>

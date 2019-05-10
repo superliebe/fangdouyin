@@ -1,4 +1,4 @@
-# vue-relaxed
+# fangdouyin
 
 ## Project setup
 ```

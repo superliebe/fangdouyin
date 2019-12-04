@@ -2,9 +2,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-
+// 引入组件样式
+import Vant from 'vant';
 import 'vant/lib/index.css';
-import '../public/css/iconfont.css' /*引入公共样式*/
+import './static/css/iconfont.css'
+
+Vue.use(Vant);
 
 Vue.config.productionTip = false;
 

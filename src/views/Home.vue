@@ -463,7 +463,10 @@
                 this.current = index;
                 //切换直接自动播放下一个
                 this.isVideoShow = false;
-                this.pauseVideo()
+                setTimeout(()=>{
+                    this.pauseVideo()
+                },100)
+
             },
             // 开始播放
             playvideo(event) {

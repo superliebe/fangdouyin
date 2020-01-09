@@ -15,7 +15,7 @@
                     src：播放地址
                     -->
                         <video class="video_box" loop webkit-playsinline="true" x5-video-player-type="h5-page" x5-video-player-fullscreen="true" playsinline preload="auto"
-                               :poster="item.cover" :src="item.url" :playOrPause="playOrPause"
+                               :poster="item.cover" :src="item.url" :playOrPause="playOrPause" autoplay="autoplay"
                                @click="pauseVideo" @ended="onPlayerEnded($event)"
                                >
                         </video>

@@ -14,10 +14,11 @@
                     poster：封面
                     src：播放地址
                     -->
-                        <video class="video_box" loop webkit-playsinline="true" x5-video-player-type="h5-page" x5-video-player-fullscreen="true" playsinline preload="auto"
-                               :poster="item.cover" :src="item.url" :playOrPause="playOrPause" autoplay="autoplay"
+                        <video class="video_box" loop webkit-playsinline="true" x5-video-player-type="h5-page"
+                               x5-video-player-fullscreen="true" playsinline preload="auto"
+                               :poster="item.cover" :src="item.url" :playOrPause="playOrPause"
                                @click="pauseVideo" @ended="onPlayerEnded($event)"
-                               >
+                        >
                         </video>
                         <!-- 封面 -->
                         <img v-show="isVideoShow" class="play" @click="playvideo" :src="item.cover"/>
@@ -51,10 +52,10 @@
                     <!-- 底部作品描述 -->
                     <div class="production_box">
                         <div class="production_name">
-                            @superKM
+                            @{{item.author}}
                         </div>
                         <div class="production_des">
-                            年轻的时候要注意‘养生’，少玩手机多睡觉！少玩手机多睡觉！少玩手机多睡觉！切记少玩手机多睡觉！少玩手机多睡觉！少玩手机多睡觉！@ 抖音小助手
+                            {{item.des}}
                         </div>
                     </div>
                 </van-swipe-item>
@@ -178,6 +179,8 @@
         SwipeItem,
         Toast
     } from 'vant';
+    // 引入微信分享
+    import wx from "weixin-js-sdk";
 
     Vue.use(Swipe, Toast).use(SwipeItem);
 
@@ -195,6 +198,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
+                    author:'superKM',
+                    des:'武汉加油'
                 }, {
                     url: 'http://video.jishiyoo.com/1eedc49bba7b4eaebe000e3721149807/d5ab221b92c74af8976bd3c1473bfbe2-4518fe288016ee98c8783733da0e2da4-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343195934.jpg',
@@ -202,6 +207,8 @@
                     fabulous: true,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 2,//作者ID
+                    author:'superKM',
+                    des:'中国加油'
                 }, {
                     url: 'http://video.jishiyoo.com/161b9562c780479c95bbdec1a9fbebcc/8d63913b46634b069e13188b03073c09-d25c062412ee3c4a0758b1c48fc8c642-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343262684.jpg',
@@ -209,6 +216,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
+                    author:'superKM',
+                    des:'武汉加油'
                 }, {
                     url: 'http://video.jishiyoo.com/549ed372c9d14b029bfb0512ba879055/8e2dc540573d496cb0942273c4a4c78c-15844fe70971f715c01d57c0c6595f45-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343508574.jpg',
@@ -216,6 +225,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
+                    author:'superKM',
+                    des:'中国加油'
                 }],
                 isVideoShow: true,
                 playOrPause: true,
@@ -241,6 +252,16 @@
             comment_text(newV, oldV) {
                 newV == '' ? this.canSend = false : this.canSend = true
             }
+        },
+        mounted() {
+            wx.config({
+                debug: false,
+                appId: '111',
+                timestamp: '111',
+                nonceStr: '111',
+                signature: '111',
+                jsApiList: []
+            })
         },
         methods: {
             //获取评论
@@ -463,9 +484,9 @@
                 this.current = index;
                 //切换直接自动播放下一个
                 this.isVideoShow = false;
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.pauseVideo()
-                },100)
+                }, 100)
 
             },
             // 开始播放
@@ -480,27 +501,39 @@
                     video.style.width = window.innerWidth + "px";
                     video.style.height = window.innerHeight + "px";
                 }
-
                 videoProcessInterval = setInterval(() => {
                     this.changeProcess(video)
                 }, 100)
             },
             pauseVideo() { //暂停\播放
-                let video = document.querySelectorAll('video')[this.current];
-                console.log("pauseVideo" + this.current);
-                if (this.playOrPause) {
-                    video.pause();
-                    this.iconPlayShow = true;
-                    clearInterval(videoProcessInterval)
-                } else {
-                    video.play();
-                    this.iconPlayShow = false;
-                    videoProcessInterval = setInterval(() => {
-                        this.changeProcess(video)
-                    }, 100)
+                try {
+                    let video = document.querySelectorAll('video')[this.current];
+                    console.log("pauseVideo" + this.current);
+                    if (this.playOrPause) {
+                        video.pause();
+                        this.iconPlayShow = true;
+                        clearInterval(videoProcessInterval)
+                    } else {
+                        // wx.ready(() => {
+                        //     // 在微信的ready中进行播放 不管成功配置与否 都会执行ready
+                        //     video.play();
+                        // })
+                        video.play();
+                        video.pause();
+                        setTimeout(()=>{
+                            video.play();
+                            this.iconPlayShow = false;
+                            videoProcessInterval = setInterval(() => {
+                                this.changeProcess(video)
+                            }, 100)
+                        },100)
+                    }
+                    this.playOrPause = !this.playOrPause;
+                    this.showShareBox = false;
+                } catch (e) {
+                    alert(e)
                 }
-                this.playOrPause = !this.playOrPause;
-                this.showShareBox = false;
+
 
             },
             //记录播放进度

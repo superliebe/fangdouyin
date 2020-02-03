@@ -1,5 +1,8 @@
 <template>
     <div class="container_box" id="video_box">
+        <a href="">
+            <img src="http://npjy.oss-cn-beijing.aliyuncs.com/images/file-15807175142891GIFp.png" class="back_i" alt="">
+        </a>
         <div class="van_swipe">
             <!--vant van-swipe 滑动组件 -->
             <van-swipe :show-indicators="false" @change="onChange" vertical :loop="false">
@@ -63,15 +66,15 @@
             <!--底部操作栏-->
             <div class="container_bottom">
                 <div class="border_progress" :style="'width:'+videoProcess+'%'"></div>
-                <div class="bottom_tab" :class="tabIndex==0?'tab_active':''" @click="changeTab(0)">
-                    <span class="bottom_tab_span ">首页</span>
-                </div>
-                <div class="bottom_tab" :class="tabIndex==1?'tab_active':''" @click="changeTab(1)">
-                    <img src="http://oss.jishiyoo.com/images/file-1575427746903.png" alt="" class="bottom_tab_icon">
-                </div>
-                <div class="bottom_tab" :class="tabIndex==2?'tab_active':''" @click="changeTab(2)">
-                    <span class="bottom_tab_span">我的</span>
-                </div>
+                    <div class="bottom_tab" :class="tabIndex==0?'tab_active':''" @click="changeTab(0)">
+                        <span class="bottom_tab_span ">首页</span>
+                    </div>
+                    <div class="bottom_tab" :class="tabIndex==1?'tab_active':''" @click="changeTab(1)">
+                        <img src="http://oss.jishiyoo.com/images/file-1575427746903.png" alt="" class="bottom_tab_icon">
+                    </div>
+                    <div class="bottom_tab" :class="tabIndex==2?'tab_active':''" @click="changeTab(2)">
+                        <span class="bottom_tab_span">我的</span>
+                    </div>
             </div>
             <!--分享弹框-->
             <div class="share_box" :class="showShareBox?'share_active':''">
@@ -91,7 +94,7 @@
                 <div class="share_cancel" @click="cancelShare">取消</div>
             </div>
             <!--留言弹窗-->
-            <van-popup v-model="commentPop" :overlay="true" class="comment_container" position="bottom">
+            <van-popup v-model="commentPop" closeable :overlay="true" class="comment_container" position="bottom">
                 <div class="comment_box">
                     <div class="comment_top">
                         12.5w条评论
@@ -482,11 +485,18 @@
                 this.playOrPause = false;
                 this.showShareBox = false;
                 this.current = index;
-                //切换直接自动播放下一个
-                this.isVideoShow = false;
-                setTimeout(() => {
-                    this.pauseVideo()
-                }, 100)
+                //非ios切换直接自动播放下一个
+                if(!this.isiOS){
+                    this.isVideoShow = false;
+                    setTimeout(() => {
+                        this.pauseVideo()
+                    }, 100)
+                }else{
+                    //ios官方禁止video自动播放，未找到合适的方法，如果您发现了，麻烦告诉我一下谢谢啦
+                    this.playOrPause = true;
+                    this.iconPlayShow = true;
+                }
+
 
             },
             // 开始播放
@@ -566,6 +576,14 @@
     .clear {
         clear: both;
     }
+    .back_i{
+        position: fixed;
+        top: 20px;
+        left: 10px;
+        width: 28px;
+        z-index: 10;
+    }
+
 
     .video-player {
         height: 100vh;

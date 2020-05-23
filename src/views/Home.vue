@@ -1,8 +1,5 @@
 <template>
     <div class="container_box" id="video_box">
-        <a href="">
-            <img src="http://npjy.oss-cn-beijing.aliyuncs.com/images/file-15807175142891GIFp.png" class="back_i" alt="">
-        </a>
         <div class="van_swipe">
             <!--vant van-swipe 滑动组件 -->
             <van-swipe :show-indicators="false" @change="onChange" vertical :loop="false">
@@ -265,6 +262,10 @@
                 signature: '111',
                 jsApiList: []
             })
+            //获取到视频资源后默认自动播放
+            setTimeout(()=>{
+                this.playvideo()
+            },500)
         },
         methods: {
             //获取评论
@@ -1140,6 +1141,7 @@
         float: left;
         color: #555;
         caret-color: #f44;
+        line-height: .44rem;
     }
 
     .comment_input_right {

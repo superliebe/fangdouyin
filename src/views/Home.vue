@@ -63,15 +63,15 @@
             <!--底部操作栏-->
             <div class="container_bottom">
                 <div class="border_progress" :style="'width:'+videoProcess+'%'"></div>
-                    <div class="bottom_tab" :class="tabIndex==0?'tab_active':''" @click="changeTab(0)">
-                        <span class="bottom_tab_span ">首页</span>
-                    </div>
-                    <div class="bottom_tab" :class="tabIndex==1?'tab_active':''" @click="changeTab(1)">
-                        <img src="http://oss.jishiyoo.com/images/file-1575427746903.png" alt="" class="bottom_tab_icon">
-                    </div>
-                    <div class="bottom_tab" :class="tabIndex==2?'tab_active':''" @click="changeTab(2)">
-                        <span class="bottom_tab_span">我的</span>
-                    </div>
+                <div class="bottom_tab" :class="tabIndex==0?'tab_active':''" @click="changeTab(0)">
+                    <span class="bottom_tab_span ">首页</span>
+                </div>
+                <div class="bottom_tab" :class="tabIndex==1?'tab_active':''" @click="changeTab(1)">
+                    <img src="http://oss.jishiyoo.com/images/file-1575427746903.png" alt="" class="bottom_tab_icon">
+                </div>
+                <div class="bottom_tab" :class="tabIndex==2?'tab_active':''" @click="changeTab(2)">
+                    <span class="bottom_tab_span">我的</span>
+                </div>
             </div>
             <!--分享弹框-->
             <div class="share_box" :class="showShareBox?'share_active':''">
@@ -198,8 +198,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
-                    author:'superKM',
-                    des:'武汉加油'
+                    author: 'superKM',
+                    des: '武汉加油'
                 }, {
                     url: 'http://video.jishiyoo.com/1eedc49bba7b4eaebe000e3721149807/d5ab221b92c74af8976bd3c1473bfbe2-4518fe288016ee98c8783733da0e2da4-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343195934.jpg',
@@ -207,8 +207,8 @@
                     fabulous: true,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 2,//作者ID
-                    author:'superKM',
-                    des:'中国加油'
+                    author: 'superKM',
+                    des: '中国加油'
                 }, {
                     url: 'http://video.jishiyoo.com/161b9562c780479c95bbdec1a9fbebcc/8d63913b46634b069e13188b03073c09-d25c062412ee3c4a0758b1c48fc8c642-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343262684.jpg',
@@ -216,8 +216,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
-                    author:'superKM',
-                    des:'武汉加油'
+                    author: 'superKM',
+                    des: '武汉加油'
                 }, {
                     url: 'http://video.jishiyoo.com/549ed372c9d14b029bfb0512ba879055/8e2dc540573d496cb0942273c4a4c78c-15844fe70971f715c01d57c0c6595f45-ld.mp4',
                     cover: 'http://oss.jishiyoo.com/images/file-1575343508574.jpg',
@@ -225,8 +225,8 @@
                     fabulous: false,//是否赞过
                     tagFollow: false,//是否关注过该作者
                     author_id: 1,//作者ID
-                    author:'superKM',
-                    des:'中国加油'
+                    author: 'superKM',
+                    des: '中国加油'
                 }],
                 isVideoShow: true,
                 playOrPause: true,
@@ -263,9 +263,9 @@
                 jsApiList: []
             })
             //获取到视频资源后默认自动播放
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.playvideo()
-            },500)
+            }, 500)
         },
         methods: {
             //获取评论
@@ -487,12 +487,12 @@
                 this.showShareBox = false;
                 this.current = index;
                 //非ios切换直接自动播放下一个
-                if(!this.isiOS){
+                if (!this.isiOS) {
                     this.isVideoShow = false;
                     setTimeout(() => {
                         this.pauseVideo()
                     }, 100)
-                }else{
+                } else {
                     //ios官方禁止video自动播放，未找到合适的方法，如果您发现了，麻烦告诉我一下谢谢啦
                     this.playOrPause = true;
                     this.iconPlayShow = true;
@@ -531,13 +531,13 @@
                         // })
                         video.play();
                         video.pause();
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             video.play();
                             this.iconPlayShow = false;
                             videoProcessInterval = setInterval(() => {
                                 this.changeProcess(video)
                             }, 100)
-                        },100)
+                        }, 100)
                     }
                     this.playOrPause = !this.playOrPause;
                     this.showShareBox = false;
@@ -577,7 +577,8 @@
     .clear {
         clear: both;
     }
-    .back_i{
+
+    .back_i {
         position: fixed;
         top: 20px;
         left: 10px;

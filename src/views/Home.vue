@@ -169,7 +169,6 @@
                     <i class="iconfont icon-fasong comment_i" :class="canSend?'comment_i_active':''"></i>
                 </div>
             </div>
-            <return-top></return-top>
         </div>
     </div>
 </template>

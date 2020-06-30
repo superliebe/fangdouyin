@@ -7,6 +7,9 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import './static/css/iconfont.css'
 
+import utils from 'km-vue-utils'
+Vue.use(utils);
+Vue.prototype.$utils = utils;
 Vue.use(Vant);
 
 

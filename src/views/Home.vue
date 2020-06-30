@@ -169,6 +169,7 @@
                     <i class="iconfont icon-fasong comment_i" :class="canSend?'comment_i_active':''"></i>
                 </div>
             </div>
+            <return-top></return-top>
         </div>
     </div>
 </template>
@@ -177,11 +178,10 @@
     import {
         Swipe,
         SwipeItem,
-        Toast
+        Toast,
     } from 'vant';
     // 引入微信分享
     import wx from "weixin-js-sdk";
-
     Vue.use(Swipe, Toast).use(SwipeItem);
 
     let videoProcessInterval;

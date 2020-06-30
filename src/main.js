@@ -9,6 +9,7 @@ import './static/css/iconfont.css'
 
 Vue.use(Vant);
 
+
 Vue.config.productionTip = false;
 
 new Vue({

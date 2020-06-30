@@ -253,14 +253,19 @@
             }
         },
         mounted() {
-            wx.config({
-                debug: false,
-                appId: '111',
-                timestamp: '111',
-                nonceStr: '111',
-                signature: '111',
-                jsApiList: []
-            })
+            try{
+                wx.config({
+                    debug: false,
+                    appId: '111',
+                    timestamp: '111',
+                    nonceStr: '111',
+                    signature: '111',
+                    jsApiList: []
+                })
+            }catch (e) {
+                console.log(e)
+            }
+
             //获取到视频资源后默认自动播放
             setTimeout(() => {
                 this.playvideo()
@@ -507,10 +512,21 @@
                 this.iconPlayShow = false;
                 this.showShareBox = false;
                 video.play();
-                window.onresize = function () {
-                    video.style.width = window.innerWidth + "px";
-                    video.style.height = window.innerHeight + "px";
+
+                if (this.isiOS) {
+                    setTimeout(() => {
+                        //处理ios宽视频
+                        let documentW = (document.documentElement.clientWidth || document.body.clientWidth);
+                        let docB = parseFloat(video.videoWidth / documentW);
+                        console.log("获取视频宽和屏幕比：" + docB)
+                        // 计算视频最适高度
+                        let realH = parseInt(video.videoHeight / docB);
+                        this.realH = realH + 'px'
+                        console.log("视频最适高度：" + this.realH)
+                        this.$forceUpdate();
+                    }, 200);
                 }
+
                 videoProcessInterval = setInterval(() => {
                     this.changeProcess(video)
                 }, 100)
@@ -616,14 +632,9 @@
     }
 
     .video_box {
-        object-fit: fill !important;
-        z-index: 999;
+        /*object-fit: fill !important;*/
+        /*z-index: 999;*/
         width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        overflow: hidden;
     }
 
     video {
